@@ -3,8 +3,11 @@ import model from '../models';
 
 const secret = 'secret';
 
-const Auth = {
-  verifyToken(request, response, next) {
+export default  class Auth {
+  constructor(){
+
+  }
+  public    verifyToken(request, response, next) {
     const token = request.headers.authorization ||
       request.body.token || request.headers['x-access-token'];
     if (!token) {
@@ -19,8 +22,8 @@ const Auth = {
       request.decoded = decoded;
       return next();
     });
-  },
-  adminAccess(request, response, next) {
+  }
+ public adminAccess(request, response, next) {
     model.Role.findById(request.decoded.roleId)
       .then((Role) => {
         if (Role.title.toLowerCase() === 'admin') {
@@ -31,6 +34,6 @@ const Auth = {
         }
       });
   }
-};
+ 
 
-module.exports = Auth;
+  }  

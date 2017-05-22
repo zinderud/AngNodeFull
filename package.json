@@ -3,12 +3,25 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
+ 
+     "ng": "ng",
     "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start": "node dist/server/app.js",
+    "predev": "tsc -p server",
+    "dev": "  \"ng serve -pc proxy.conf.json --open\" \"tsc -w -p server\" \"nodemon dist/server/app.js\"",
+    "prod":"ng build -aot -prod && tsc -p server && node dist/server/app.js\"",
+     "mig:test": "cross-env NODE_ENV=test sequelize db:migrate",
+    "mig:dev": "cross-env NODE_ENV=development sequelize db:migrate",
+    "mig:test:undo": "cross-env NODE_ENV=test sequelize db:migrate:undo:all",
+    "mig:dev:undo": "cross-env NODE_ENV=development sequelize db:migrate:undo:all",
+    "test": "cross-env NODE_ENV=test istanbul cover _mocha -- -R spec test/**/**/*.spec.js --compilers js:babel-core/register",
+    "seed:test": "cross-env NODE_ENV=test sequelize db:seed:all",
+    "seed:dev": "cross-env NODE_ENV=development sequelize db:seed:all",
+    "seed:create:test": "cross-env NODE_ENV=test sequelize seed:create",
+    "seed:create:dev": "cross-env NODE_ENV=development sequelize seed:create",
+    "seed:dev:undo": "cross-env NODE_ENV=development sequelize db:seed:undo:all",
+    "seed:test:undo": "cross-env NODE_ENV=test sequelize db:seed:undo:all",
+    "postinstall": " sequelize db:migrate && sequelize db:seed:undo:all && sequelize db:seed:all"
   },
   "private": true,
   "dependencies": {

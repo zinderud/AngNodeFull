@@ -1,11 +1,13 @@
 import express from 'express';
 import userController from '../controllers/userController';
 // import documentController from '../controllers/documentController';
-import auth from '../middleware/auth';
+import * as Auth from '../middleware/auth';
 // import utils    from '../middlewares/utils';
 import cors  from "cors";
 const user = express.Router();
 
+  
+let auth= new Auth()
 user.route('/api/user')
 .get(auth.verifyToken, auth.adminAccess, userController.getAllUsers)
 .post(cors(),userController.createUser);
@@ -39,5 +41,4 @@ user.route('/api/user/logout')
 user.route('/api/users/open/')
 .get(userController.getAllAdmin)
 
-
-module.exports = () => user;
+ export const userRoute = () => user;

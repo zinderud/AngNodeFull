@@ -360,15 +360,15 @@ class UserController {
     }
 
     const userQuery = request.query.query;
-    const query = {
+    const query: any = {
       attributes: ['id', 'firstName', 'lastName', 'email', 'roleId'],
       limit,
       offset,
       order: '"createdAt" ASC'
     };
     if (userQuery) {
-      query.where = {
-        $and: {
+      query.where  = {
+        $and: { 
           $or: [
             { firstName: { $iLike: `%${userQuery}%` } },
             { lastName: { $iLike: `%${userQuery}%` } }

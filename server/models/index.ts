@@ -1,14 +1,14 @@
-import fs from 'fs';
-import path from 'path';
-import Sequelize from 'sequelize';
-import * as dbConfig from '../config/config.json';
+import * as  fs from 'fs';
+import * as  path from 'path';
+import * as  Sequelize from 'sequelize';
+const  dbConfig = JSON.parse(fs.readFileSync('../config/config.json', 'utf8'));
 
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
 const config = dbConfig[env];
 // const config = require(`${__dirname}/../config/config.json`)[env];
 
-const db = {};
+const db: any = {};
 let sequelize;
 
 if (config.use_env_variable) {
