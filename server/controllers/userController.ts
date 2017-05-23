@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt-nodejs';
+import * as jwt from 'jsonwebtoken';
+import {bcrypt} from 'bcrypt-nodejs';
 import model from '../models';
-import cors  from "cors";
+import * as cors  from "cors";
 const secret = process.env.SECRET_TOKEN || 'secret';
 
 // To create text-friendly user details

@@ -1,7 +1,7 @@
 import * as  fs from 'fs';
 import * as  path from 'path';
 import * as  Sequelize from 'sequelize';
-const  dbConfig = JSON.parse(fs.readFileSync('../config/config.json', 'utf8'));
+const  dbConfig = JSON.parse(fs.readFileSync(`./config/config.json`, 'utf8'));
 
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';

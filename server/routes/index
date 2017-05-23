@@ -1,0 +1,14 @@
+import * as express from 'express';
+
+ const index    =   express.Router();
+
+index.route('/')
+  .get((req, res) => res
+    .status(200)
+    .send({ message: 'Welcome Back Mr Anderson I miss you...!' }));
+
+
+
+ 
+
+ export const indexRoute = () => index;

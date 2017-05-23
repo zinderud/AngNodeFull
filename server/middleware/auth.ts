@@ -1,29 +1,26 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import model from '../models';
 
 const secret = 'secret';
 
-export default  class Auth {
-  constructor(){
-
-  }
-  public    verifyToken(request, response, next) {
+var  auth = {
+   verifyToken(request, response, next) {
     const token = request.headers.authorization ||
       request.body.token || request.headers['x-access-token'];
     if (!token) {
       return response.status(401)
-      .send({ message: 'No token supplied' });
+        .send({ message: 'No token supplied' });
     }
     jwt.verify(token, secret, (err, decoded) => {
       if (err) {
         return response.status(401)
-            .send({ message: 'Token Invalid' });
+          .send({ message: 'Token Invalid' });
       }
       request.decoded = decoded;
       return next();
     });
-  }
- public adminAccess(request, response, next) {
+  },
+  adminAccess(request, response, next) {
     model.Role.findById(request.decoded.roleId)
       .then((Role) => {
         if (Role.title.toLowerCase() === 'admin') {
@@ -33,7 +30,6 @@ export default  class Auth {
             .send({ message: 'User is unauthorized for this request.' });
         }
       });
-  }
- 
-
-  }  
+  }}
+   
+export default auth ;

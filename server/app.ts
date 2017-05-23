@@ -1,41 +1,32 @@
-import express from 'express';
-import logger from 'morgan';
-import bodyParser from 'body-parser';
+import * as express from 'express';
+import * as morgan from 'morgan';
+import * as dotenv from 'dotenv';
+import * as bodyParser from 'body-parser';
 import * as path from 'path';
-/*import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from './webpack.config';*/
-import * as  indexRoute from './routes/index';
-import * as roleRoute from './routes/roleRoute';
-import * as  userRoute from './routes/userRoute';
 
-const port = parseInt(process.env.PORT, 10) || 8000;
 
-// Set up the express app
+import setRoutes from './routes';
+
 const app = express();
+app.set('port', (process.env.PORT || 8000));
 
-/*if (process.env.NODE_ENV !== 'production') {
-  const compiler = webpack(webpackConfig);
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath
-  }));
-  app.use(webpackHotMiddleware(compiler));
-}*/
-// Log requests to the console.
-app.use(logger('dev'));
+app.use('/', express.static(path.join(__dirname, '../public')));
 
-// Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-//for angular path or react path
-app.use(express.static(path.join(__dirname, 'client/dist')));
-app.use(  indexRoute());
-app.use(  roleRoute());
-app.use(  userRoute());
-app.listen(port, (req, res) => {
-  console.log(`Listening on port ${port}`);
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(morgan('dev'));
+
+dotenv.load({ path: '.env' });
+
+setRoutes(app);
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-module.exports = app;
+app.listen(app.get('port'), () => {
+  console.log('Angular Full Stack listening on port ' + app.get('port'));
+});
+
+export { app };
