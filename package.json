@@ -2,6 +2,8 @@
   "name": "ang-node-full",
   "version": "0.0.0",
   "license": "MIT",
+   "author": "murat onur karadeniz",
+  "description": "Angular Full Stack project built using Angular 4, Express, sequelize and Node.",
   "scripts": {
 
     "ng": "ng",
