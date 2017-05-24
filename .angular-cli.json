@@ -9,6 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "content",
         "favicon.ico"
       ],
       "index": "index.html",
@@ -19,7 +20,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+         "content/scss/vendor.scss",
+        "content/scss/global.scss",
+          "../node_modules/primeng/resources/primeng.min.css",
+          "../node_modules/primeng/resources/themes/bootstrap/theme.css",
+        "../node_modules/font-awesome/css/font-awesome.min.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
